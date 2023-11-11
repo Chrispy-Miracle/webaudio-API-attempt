@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <script type="text/javascript" src="audio.js"></script>
+    </head>
+    <body>
+        <audio id="audio" src="ThinkTank.wav" ></audio>
+        <button id="play-btn" data-playing="false"  role="switch" aria-checked="false">
+            <span>Play/Pause</span>
+        </button>
+        <div>
+            <label for="volume">Volume</label>
+            <input type="range" id="volume" class="knob" min="0" max="2" value="1" step="0.01"/>            
+        </div>
+        <div>
+            <label for="oscillator">Oscillator</label>
+            <input type="range" id="oscillator" min="0" max="3000" value="1" step="1"/>            
+        </div>
+        <button id="on-oscillator">Start Oscillator</button>
+        <button id="off-oscillator">Stop Oscillator</button>
+        <select name="oscillator-type" id="oscillator-type">
+            <option value="square">Square</option>
+            <option value="sine">Sine</option>
+            <option value="sawtooth">Sawtooth</option>
+            <option value="triangle">Triangle</option>
+            <option value="custom">Custom</option>
+        </select>
+        <div>
+            <label for="distortion">Distortion</label>
+            <input type="range" id="distortion" class="knob" min="0" max="400" value="1" step="1"/>            
+        </div>
+        <div class="flex-row">
+            <div id="compressor">
+                <h4>Compressor</h4>
+                <label for="ratio">Ratio: <span id="ratio-val">10</span></label>
+                <input type="range" id="ratio" min="1" max="20" value="10" step="1"/> 
+                <label for="threshold">Threshold: <span id="threshold-val">-50</span></label>
+                <input type="range" id="threshold" min="-100" max="0" value="-50" step="1"/> 
+                <label for="knee">Knee: <span id="knee-val">20</span></label>
+                <input type="range" id="knee" min="1" max="40" value="20" step="1"/> 
+                <label for="attack">Attack: <span id="attack-val">10</span></label>
+                <input type="range" id="attack" min="1" max="20" value="10" step="1"/>
+                <label for="release">Release: <span id="release-val">.5</span></label>
+                <input type="range" id="release" min="0.01" max="1" value="0.5" step=".01"/>                                                             
+            </div>
+            <div id="pan-filter">
+                <div>
+                    <label for="panner">Panner:</label>
+                    <input type="range" class="knob" id="panner" min="-1" max="1" value="0" step=".1"/>            
+                    <span id="panner-val">0</span>
+                </div>
+                <div>
+                    <label for="low-pass">Low Pass Frequency: </label>
+                    <input type="range" class="knob" id="low-pass" min="10" max="10000" value="5000" step="1"/>
+                    <span id="low-pass-val">5000</span>          
+                </div>   
+                <div>
+                    <label for="low-pass-q">Low Pass Q: </label>
+                    <input type="range" class="knob" id="low-pass-q" min=".01" max="10" value="1" step=".01"/>
+                    <span id="low-pass-q-val">1</span>            
+                </div>      
+                <div>
+                    <label for="high-pass">High Pass Frequency: </label>
+                    <input type="range" class="knob" id="high-pass" min="1" max="10000" value="350" step="1"/>
+                    <span id="high-pass-val">1</span>           
+                </div>   
+                <div>
+                    <label for="high-pass-q">High Pass Q: </label>
+                    <input type="range" class="knob" id="high-pass-q" min=".01" max="10" value="1" step=".01"/>
+                    <span id="high-pass-q-val">1</span>            
+                </div> 
+            </div>
+        </div>
+        <div id="visuals" class="flex-row">
+            
+        </div>
+        <div id="keyboard">
+            <div id="b2-key" data-tone="123.47" class="white-key key">B</div>
+            <div id="c3-key" data-tone="130.81" class="white-key key">C</div>
+            <div id="db3-key" data-tone="138.59" class="black-key key">C#<br>Db</div>
+            <div id="d3-key" data-tone="146.83" class="white-key key">D</div>
+            <div id="eb3-key" data-tone="155.56" class="black-key key">D#<br>Eb</div>
+            <div id="e3-key" data-tone="164.81" class="white-key key">E</div>
+            <div id="f3-key" data-tone="174.61" class="white-key key">F</div>
+            <div id="gb3-key" data-tone="185.00" class="black-key key">F#<br>Gb</div>
+            <div id="g3-key" data-tone="196.00" class="white-key key">G</div>
+            <div id="ab3-key" data-tone="207.65" class="black-key key">G#<br>Ab</div>
+            <div id="a3-key" data-tone="220.00" class="white-key key">A</div>
+            <div id="bb3-key" data-tone="233.08" class="black-key key">A#<br>Bb</div>
+            <div id="b3-key" data-tone="246.94" class="white-key key">B</div>
+            <div id="c4-key" data-tone="261.63" class="white-key key">C</div>
+            <div id="db4-key" data-tone="277.18" class="black-key key">C#<br>Db</div>
+            <div id="d4-key" data-tone="293.66" class="white-key key">D</div>
+            <div id="eb4-key" data-tone="311.13" class="black-key key">D#<br>Eb</div>
+            <div id="e4-key" data-tone="329.63" class="white-key key">E</div>
+            <div id="f4-key" data-tone="349.23" class="white-key key">F</div>
+            <div id="gb4-key" data-tone="369.99" class="black-key key">F#<br>Gb</div>
+            <div id="g4-key" data-tone="392.00" class="white-key key">G</div>
+            <div id="ab4-key" data-tone="415.30" class="black-key key">G#<br>Ab</div>
+            <div id="a4-key" data-tone="440" class="white-key key">A</div>
+            <div id="bb4-key" data-tone="466.16" class="black-key key">A#<br>Bb</div>
+            <div id="b4-key" data-tone="493.88" class="white-key key">B</div>
+            <div id="c5-key" data-tone="523.25" class="white-key key">C</div>            
+        </div>    
+        <input type="file" id="audio-file" accept="audio/*">  
+        <div id="audio-area"></div> 
+    </body> 
+</html>
