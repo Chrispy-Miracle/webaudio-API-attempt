@@ -72,9 +72,33 @@
                 </div> 
             </div>
         </div>
+        
+            <div id="visual-sel-cont" class="flex-col">
+                <label for="visual-select">Visual Type</label>
+                <select id="visual-select" name="visual">
+                    <option value="basic">Basic</option>
+                    <option value="nineties">90's visual</option>
+                    <option value="spinning-a">Spinning A</option>
+                    <option value="spinning-b">Spinning B</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <div id="custom-controls" class="flex-row hidden">
+                    <label for="num-keyframes">Num of Keyframes</label>
+                    <input id="num-keyframes" name="num-keyframes" type="number" min="2" max="5"/>
+                    <label for="finish-color">Finish color:</label>
+                    <input id="finish-color" name="finish-color" type="color" value="#000099"/>
+                    <label for="start-height">Start Height (px):</label>
+                    <input id="start-height" name="start-height" type="number" placeholder="5" max="300" min="0"/>                    
+                    <label for="finish-height">finish Height (px):</label>
+                    <input id="finish-height" name="finish-height" type="number" placeholder="5" max="300" min="0"/> 
+                </div>
+
+            </div>
+
         <div id="visuals" class="flex-row">
-            
+            <!-- visual elements created here -->
         </div>
+
         <div id="keyboard">
             <div id="b2-key" data-tone="123.47" class="white-key key">B</div>
             <div id="c3-key" data-tone="130.81" class="white-key key">C</div>
@@ -101,7 +125,7 @@
             <div id="a4-key" data-tone="440" class="white-key key">A</div>
             <div id="bb4-key" data-tone="466.16" class="black-key key">A#<br>Bb</div>
             <div id="b4-key" data-tone="493.88" class="white-key key">B</div>
-            <div id="c5-key" data-tone="523.25" class="white-key key">C</div>            
+            <div id="c5-key" data-tone="523.25" class="white-key key">C</div>  
         </div>    
         <input type="file" id="audio-file" accept="audio/*">  
         <div id="audio-area"></div> 

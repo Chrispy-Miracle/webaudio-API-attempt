@@ -263,24 +263,82 @@ document.addEventListener("DOMContentLoaded", () => {
             "g": "#f705cf"      
         }
 
-
+        const visualSelector =  document.querySelector("#visual-select")
+        const customControls = document.querySelector("#custom-controls")
+        
+        visualSelector.addEventListener(
+            "input",
+            () => {
+                if (visualSelector.value === "custom") {
+                    customControls.classList.remove("hidden")
+                } else {
+                    customControls.classList.add("hidden")
+                }
+            }
+        )
+        
         // Visuals attempt
         const createVisual = (keyId) => {
             
             const visContainer = document.querySelector("#visuals")
             const visual = document.createElement("div")
+            
+
             visual.classList.add("visual")
+            if (visualSelector.value === "custom") {
+                customControls.classList.remove("hidden")
+
+                const finishColor = document.querySelector("#finish-color").value
+                const startHeight = document.querySelector("#start-height").value
+                const finishHeight = document.querySelector("#finish-height").value
+
+
+                const customKeyFrames = new KeyframeEffect(
+                    visual,
+                    [
+                        {
+                            height : `${startHeight}px`,
+                            width: "5px",
+                            marginLeft: "0%"
+                        },
+                        {
+                            height : "35px",
+                            width: "35px",
+                            marginLeft: "90%"
+                        },
+                        {
+                            height : `${finishHeight}px`,
+                            width: "5px",
+                            marginLeft: "0%",
+                            backgroundColor: finishColor
+                        }                      
+                    ],
+                    { duration: 10000, }
+                )
+                
+                const customAnimation = new Animation(
+                    customKeyFrames,
+                    document.timeline
+                )
+                
+                customAnimation.play()
+                // Can modify keyframes made this way with:
+                // custom.setKeyframes([
+                //     { borderRadius: "0%"},
+                //     { borderRadius: "50%"}
+                // ])
+            } else {
+                customControls.classList.add("hidden")
+                visual.style.animationName = visualSelector.value
+            }
+            
             visual.id = `${keyId}-visual`
             var toneColorId
-            console.log(keyId.length)
             if (keyId.length === 3) {
                 toneColorId = keyId.substring(0, 2)
-                console.log("was 3: " + toneColorId)
             } else {
                 toneColorId = keyId[0]
             }
-            console.log(toneColorId)
-            console.log(toneColors[toneColorId])
             visual.style.backgroundColor = toneColors[toneColorId]
             visual.style.marginLeft = "-200px"
             visContainer.append(visual)
@@ -290,6 +348,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const visToRemove = document.querySelector(`#${keyId}-visual`)
             visToRemove.remove()
         }
+
+
 
         // A=440 key attempt
         
@@ -318,7 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
                 tone.stop(audioContext.currentTime)
                 // tone.disconnect(audioContext.destination)
-                setTimeout(() => removeVisual(key.id.split("-")[0]), 3000) 
+                setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
             }
         ))
     
