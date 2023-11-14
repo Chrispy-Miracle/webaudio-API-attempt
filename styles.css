@@ -19,14 +19,14 @@ select {
 .key {
     border: 1px solid black;
     /* height: 100px; */
-    width: 20px;
+    width: 40px;
 }
 .white-key {
-    height: 100px;
+    height: 200px;
 }
 .black-key  {
-    height: 75px;
-    font-size: 10px;;
+    height: 150px;
+    font-size: 10px;
     background-color: black;
     color: white;
 }
@@ -56,16 +56,13 @@ select {
     flex-direction: column;
 }
 #visuals {
-    width: 95vw;
+    width: 100vw;
     height: 35vw;
     background-color: black;
     /* border: 1px solid black; */
-    margin: 20px;
+    margin: 20px 0px;
     display: flex;
     justify-content: flex-start;
-}
-#keyboard {
-    margin-left: 20%;
 }
 .hidden {
     display: none;
@@ -160,7 +157,7 @@ select {
     60% {
         rotate: 359deg;
         margin-left: 80%;
-        margin-top: 15%;
+        margin-top: 0%;
         height: 25%;
         border-radius: 50%;
     }
@@ -169,7 +166,7 @@ select {
         margin-left: 0%;
         width: 5%;
         height: 5px;
-        margin-top: -15%;
+        margin-top: -25%;
         border-radius: 5%;
     }
     100% {

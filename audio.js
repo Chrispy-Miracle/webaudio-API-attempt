@@ -282,34 +282,45 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const visContainer = document.querySelector("#visuals")
             const visual = document.createElement("div")
-            
+            visual.style.height = "5px"
+            visual.style.width = "5px"
 
             visual.classList.add("visual")
             if (visualSelector.value === "custom") {
                 customControls.classList.remove("hidden")
 
                 const finishColor = document.querySelector("#finish-color").value
+
                 const startHeight = document.querySelector("#start-height").value
                 const finishHeight = document.querySelector("#finish-height").value
 
+                const startWidth = document.querySelector("#start-width").value
+                const finishWidth = document.querySelector("#finish-width").value
+
+                const startDegrees = document.querySelector("#start-degrees").value + "deg"
+                const finishDegrees = document.querySelector("#finish-degrees").value + "deg"
+                
+                const startBordRadius = document.querySelector("#start-bord-radius").value + "%"
+                const finishBordRadius = document.querySelector("#finish-bord-radius").value + "%"
 
                 const customKeyFrames = new KeyframeEffect(
                     visual,
                     [
                         {
-                            height : `${startHeight}px`,
-                            width: "5px",
-                            marginLeft: "0%"
+                            transform: `scale(${startWidth}, ${startHeight})`,
+                            rotate: startDegrees,
+                            borderRadius: startBordRadius,
+                            marginLeft: "5%"
                         },
                         {
-                            height : "35px",
-                            width: "35px",
                             marginLeft: "90%"
                         },
                         {
-                            height : `${finishHeight}px`,
-                            width: "5px",
-                            marginLeft: "0%",
+                            
+                            transform: `scale(${finishWidth}, ${finishHeight})`,
+                            rotate: finishDegrees,
+                            marginLeft: "5%",
+                            borderRadius: finishBordRadius,
                             backgroundColor: finishColor
                         }                      
                     ],
