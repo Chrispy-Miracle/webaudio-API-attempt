@@ -402,8 +402,14 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
                 startTone(key)
                 createVisual(key.id.split("-")[0])
-                tone.stop()
-                setTimeout(() => removeVisual(key.id.split("-")[0]), 10000)
+                // tone.stop()
+                // setTimeout(() => removeVisual(key.id.split("-")[0]), 10000)
+               key.addEventListener(
+                "ontouchend",
+                () => {
+                    tone.stop(audioContext.currentTime)
+                    setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+                })
             }
         ))
         // keys.forEach(key => key.addEventListener(
