@@ -302,6 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const startBordRadius = document.querySelector("#start-bord-radius").value + "%"
                 const finishBordRadius = document.querySelector("#finish-bord-radius").value + "%"
+                const finishColorToggle = document.querySelector("#finish-color-toggle")
 
                 const customKeyFrames = new KeyframeEffect(
                     visual,
@@ -321,11 +322,12 @@ document.addEventListener("DOMContentLoaded", () => {
                             rotate: finishDegrees,
                             marginLeft: "5%",
                             borderRadius: finishBordRadius,
-                            backgroundColor: finishColor
+                            backgroundColor: finishColorToggle.checked && finishColor
                         }                      
                     ],
                     { duration: 10000, }
                 )
+                
                 
                 const customAnimation = new Animation(
                     customKeyFrames,
@@ -351,7 +353,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 toneColorId = keyId[0]
             }
             visual.style.backgroundColor = toneColors[toneColorId]
-            visual.style.marginLeft = "-200px"
+            // visual.style.marginLeft = "-200px"
             visContainer.append(visual)
         }   
 
@@ -366,21 +368,24 @@ document.addEventListener("DOMContentLoaded", () => {
         
         var tone
         // const a4Key = document.querySelector("#a4-key")
+        const startTone = (key) => {
+            tone = audioContext.createOscillator()
+            tone.frequency.setValueAtTime(parseFloat(key.dataset.tone), audioContext.currentTime)
+            tone.connect(gainNode)
+            .connect(distortion)
+            .connect(compressor)
+            .connect(panner)
+            .connect(lowPass)
+            .connect(highPass)
+            .connect(audioContext.destination)
+            tone.start(audioContext.currentTime)
+        }
 
         const keys = document.querySelectorAll(".key")
         keys.forEach(key => key.addEventListener(
             "mouseenter",
             () => {
-                tone = audioContext.createOscillator()
-                tone.frequency.setValueAtTime(parseFloat(key.dataset.tone), audioContext.currentTime)
-                tone.connect(gainNode)
-                .connect(distortion)
-                .connect(compressor)
-                .connect(panner)
-                .connect(lowPass)
-                .connect(highPass)
-                .connect(audioContext.destination)
-                tone.start(audioContext.currentTime)
+                startTone(key)
                 createVisual(key.id.split("-")[0])
             }
         ))
@@ -388,7 +393,21 @@ document.addEventListener("DOMContentLoaded", () => {
             "mouseleave",
             () => {
                 tone.stop(audioContext.currentTime)
-                // tone.disconnect(audioContext.destination)
+                setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+            }
+        ))
+
+        keys.forEach(key => key.addEventListener(
+            "touchstart",
+            () => {
+                startTone(key)
+                createVisual(key.id.split("-")[0])
+            }
+        ))
+        keys.forEach(key => key.addEventListener(
+            "touchend",
+            () => {
+                tone.stop(audioContext.currentTime)
                 setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
             }
         ))
