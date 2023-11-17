@@ -411,6 +411,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
             }
         ))
+        keys.forEach(key => key.addEventListener(
+            "ontouchmove",
+            () => {
+                tone.stop(audioContext.currentTime)
+                setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+            }
+        ))
+        keys.forEach(key => key.addEventListener(
+            "ontouchcancel",
+            () => {
+                tone.stop(audioContext.currentTime)
+                setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+            }
+        ))
     
 
     const audioInput = document.querySelector("#audio-file")
