@@ -398,20 +398,21 @@ document.addEventListener("DOMContentLoaded", () => {
         ))
 
         keys.forEach(key => key.addEventListener(
-            "touchstart",
+            "ontouchstart",
             () => {
                 startTone(key)
                 createVisual(key.id.split("-")[0])
             }
         ))
         keys.forEach(key => key.addEventListener(
-            "touchend",
+            "ontouchend",
             () => {
                 tone.stop(audioContext.currentTime)
                 setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
             }
         ))
     
+
     const audioInput = document.querySelector("#audio-file")
     const audioArea = document.querySelector("#audio-area")
     audioInput.addEventListener(
