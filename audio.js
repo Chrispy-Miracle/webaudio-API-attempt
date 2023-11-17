@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create compressor
     const compressor = audioContext.createDynamicsCompressor();
 
-        // Compressor ratio
+    // Compressor ratio
     const ratioControl = document.querySelector("#ratio") 
     const ratioVal = document.querySelector("#ratio-val") 
     
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     )
 
-        // Compressor threshold
+    // Compressor threshold
     const thresholdControl = document.querySelector("#threshold") 
     const thresholdVal = document.querySelector("#threshold-val") 
 
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     )    
         
-        // Compressor knee
+    // Compressor knee
     const kneeControl = document.querySelector("#knee") 
     const kneeVal = document.querySelector("#knee-val") 
 
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     )
 
-        // Compressor Attack
+    // Compressor Attack
     const attackControl = document.querySelector("#attack") 
     const attackVal = document.querySelector("#attack-val") 
     
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     )
         
-        // Compressor release
+    // Compressor release
     const releaseControl = document.querySelector("#release") 
     const releaseVal = document.querySelector("#release-val") 
     
@@ -196,8 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const lowPass = audioContext.createBiquadFilter()
 
     lowPass.type = "lowpass"
-    // lowPass.frequency.setValueAtTime(1000, audioContext.currentTime)
-    // lowPass.gain.setValueAtTime(25, audioContext.currentTime)
     
     const lowPassFreqControl = document.querySelector("#low-pass")
     const lowPassFreqVal = document.querySelector('#low-pass-val')
@@ -220,220 +218,231 @@ document.addEventListener("DOMContentLoaded", () => {
     )
 
     //Create High pass filter
-        // Create Low Pass Filter
-        const highPass = audioContext.createBiquadFilter()
-
-        highPass.type = "highpass"
-        // highPass.frequency.setValueAtTime(1000, audioContext.currentTime)
-        // highPass.gain.setValueAtTime(25, audioContext.currentTime)
         
-        const highPassFreqControl = document.querySelector("#high-pass")
-        const highPassFreqVal = document.querySelector('#high-pass-val')
-        highPassFreqControl.addEventListener(
-            "input",
-            () => {
-                highPass.frequency.setValueAtTime(highPassFreqControl.value, audioContext.currentTime)
-                highPassFreqVal.innerHTML = highPassFreqControl.value
-            }
-        )
+    const highPass = audioContext.createBiquadFilter()
+
+    highPass.type = "highpass"
     
-        const highPassQControl = document.querySelector("#high-pass-q")
-        const highPassQVal = document.querySelector("#high-pass-q-val")
-        highPassQControl.addEventListener(
-            "input",
-            () => {
-                highPass.Q.setValueAtTime(highPassQControl.value, audioContext.currentTime)
-                highPassQVal.innerHTML = highPassQControl.value
-            }
-        )
-
-        // ROYGBIV
-        const toneColors = {
-            "ab": "#ff0000",
-            "a": "#f72905",
-            "bb": "#f75e05",
-            "b": "#f78e05",
-            "c": "#f7db05",
-            "db": "#b7f705",
-            "d": "#31f705",
-            "eb": "#05f7bf",
-            "e": "#052df7",
-            "f": "#5605f7",
-            "gb": "#8605f7",
-            "g": "#f705cf"      
+    const highPassFreqControl = document.querySelector("#high-pass")
+    const highPassFreqVal = document.querySelector('#high-pass-val')
+    highPassFreqControl.addEventListener(
+        "input",
+        () => {
+            highPass.frequency.setValueAtTime(highPassFreqControl.value, audioContext.currentTime)
+            highPassFreqVal.innerHTML = highPassFreqControl.value
         }
+    )
 
-        const visualSelector =  document.querySelector("#visual-select")
-        const customControls = document.querySelector("#custom-controls")
-        
-        visualSelector.addEventListener(
-            "input",
-            () => {
-                if (visualSelector.value === "custom") {
-                    customControls.classList.remove("hidden")
-                } else {
-                    customControls.classList.add("hidden")
-                }
-            }
-        )
-        
-        // Visuals attempt
-        const createVisual = (keyId) => {
-            
-            const visContainer = document.querySelector("#visuals")
-            const visual = document.createElement("div")
-            visual.style.height = "5px"
-            visual.style.width = "5px"
+    const highPassQControl = document.querySelector("#high-pass-q")
+    const highPassQVal = document.querySelector("#high-pass-q-val")
+    highPassQControl.addEventListener(
+        "input",
+        () => {
+            highPass.Q.setValueAtTime(highPassQControl.value, audioContext.currentTime)
+            highPassQVal.innerHTML = highPassQControl.value
+        }
+    )
 
-            visual.classList.add("visual")
+    // ~ROYGBIV:  One color for each tone
+    const toneColors = {
+        "ab": "#ff0000",
+        "a": "#f72905",
+        "bb": "#f75e05",
+        "b": "#f78e05",
+        "c": "#f7db05",
+        "db": "#b7f705",
+        "d": "#31f705",
+        "eb": "#05f7bf",
+        "e": "#052df7",
+        "f": "#5605f7",
+        "gb": "#8605f7",
+        "g": "#f705cf"      
+    }
+
+    const visualSelector =  document.querySelector("#visual-select")
+    const customControls = document.querySelector("#custom-controls")
+    
+    // Allows user to select visualization type or create custom visual
+    visualSelector.addEventListener(
+        "input",
+        () => {
             if (visualSelector.value === "custom") {
                 customControls.classList.remove("hidden")
-
-                const finishColor = document.querySelector("#finish-color").value
-
-                const startHeight = document.querySelector("#start-height").value
-                const finishHeight = document.querySelector("#finish-height").value
-
-                const startWidth = document.querySelector("#start-width").value
-                const finishWidth = document.querySelector("#finish-width").value
-
-                const startDegrees = document.querySelector("#start-degrees").value + "deg"
-                const finishDegrees = document.querySelector("#finish-degrees").value + "deg"
-                
-                const startBordRadius = document.querySelector("#start-bord-radius").value + "%"
-                const finishBordRadius = document.querySelector("#finish-bord-radius").value + "%"
-                const finishColorToggle = document.querySelector("#finish-color-toggle")
-
-                const customKeyFrames = new KeyframeEffect(
-                    visual,
-                    [
-                        {
-                            transform: `scale(${startWidth}, ${startHeight})`,
-                            rotate: startDegrees,
-                            borderRadius: startBordRadius,
-                            marginLeft: "5%"
-                        },
-                        {
-                            marginLeft: "90%"
-                        },
-                        {
-                            
-                            transform: `scale(${finishWidth}, ${finishHeight})`,
-                            rotate: finishDegrees,
-                            marginLeft: "5%",
-                            borderRadius: finishBordRadius,
-                            backgroundColor: finishColorToggle.checked && finishColor
-                        }                      
-                    ],
-                    { duration: 10000, }
-                )
-                
-                
-                const customAnimation = new Animation(
-                    customKeyFrames,
-                    document.timeline
-                )
-                
-                customAnimation.play()
-                // Can modify keyframes made this way with:
-                // custom.setKeyframes([
-                //     { borderRadius: "0%"},
-                //     { borderRadius: "50%"}
-                // ])
             } else {
                 customControls.classList.add("hidden")
-                visual.style.animationName = visualSelector.value
             }
-            
-            visual.id = `${keyId}-visual`
-            var toneColorId
-            if (keyId.length === 3) {
-                toneColorId = keyId.substring(0, 2)
-            } else {
-                toneColorId = keyId[0]
-            }
-            visual.style.backgroundColor = toneColors[toneColorId]
-            // visual.style.marginLeft = "-200px"
-            visContainer.append(visual)
-        }   
-
-        const removeVisual = (keyId) => {
-            const visToRemove = document.querySelector(`#${keyId}-visual`)
-            visToRemove.remove()
         }
+    )
+    
+    // Create custom visuals
+    const createCustomVisual = (visual) => {
+        customControls.classList.remove("hidden")
 
+        const finishColor = document.querySelector("#finish-color").value
+        const finishColorToggle = document.querySelector("#finish-color-toggle")
 
+        const startHeight = document.querySelector("#start-height").value
+        const finishHeight = document.querySelector("#finish-height").value
 
-        // A=440 key attempt
+        const startWidth = document.querySelector("#start-width").value
+        const finishWidth = document.querySelector("#finish-width").value
+
+        const startDegrees = document.querySelector("#start-degrees").value + "deg"
+        const finishDegrees = document.querySelector("#finish-degrees").value + "deg"
         
-        var tone
-        // const a4Key = document.querySelector("#a4-key")
-        const startTone = (key) => {
-            tone = audioContext.createOscillator()
-            tone.frequency.setValueAtTime(parseFloat(key.dataset.tone), audioContext.currentTime)
-            tone.connect(gainNode)
-            .connect(distortion)
-            .connect(compressor)
-            .connect(panner)
-            .connect(lowPass)
-            .connect(highPass)
-            .connect(audioContext.destination)
-            tone.start(audioContext.currentTime)
-        }
+        const startBordRadius = document.querySelector("#start-bord-radius").value + "%"
+        const finishBordRadius = document.querySelector("#finish-bord-radius").value + "%"
+        
+        // Make a KeyFrame Effect Animation
+        const customKeyFrames = new KeyframeEffect(
+            visual,
+            [
+                {
+                    transform: `scale(${startWidth}, ${startHeight})`,
+                    rotate: startDegrees,
+                    borderRadius: startBordRadius,
+                    marginLeft: "5%"
+                },
+                {
+                    marginLeft: "90%"
+                },
+                {
+                    
+                    transform: `scale(${finishWidth}, ${finishHeight})`,
+                    rotate: finishDegrees,
+                    marginLeft: "5%",
+                    borderRadius: finishBordRadius,
+                    backgroundColor: finishColorToggle.checked ? finishColor : visual.style.backgroundColor
+                }                      
+            ],
+            { duration: 10000, }
+        )
+        
+        // Hook up custom key frame with timeline 
+        const customAnimation = new Animation(
+            customKeyFrames,
+            document.timeline
+        )
+        // Play animation
+        customAnimation.play()
+        // Can modify keyframes made this way with:
+        // custom.setKeyframes([
+        //     { borderRadius: "0%"},
+        //     { borderRadius: "50%"}
+        // ])
+    }
 
-        const keys = document.querySelectorAll(".key")
-        keys.forEach(key => key.addEventListener(
-            "mouseenter",
-            () => {
-                startTone(key)
-                createVisual(key.id.split("-")[0])
-            }
-        ))
-        keys.forEach(key => key.addEventListener(
-            "mouseleave",
+    // Visuals attempt
+    const createVisual = (keyId) => {
+        
+        const visContainer = document.querySelector("#visuals")
+        const visual = document.createElement("div")
+        visual.style.height = "5px"
+        visual.style.width = "5px"
+        visual.classList.add("visual")
+
+        // Visual is preselected or custom
+        if (visualSelector.value === "custom") {
+            createCustomVisual(visual)
+        } else {
+            customControls.classList.add("hidden")
+            visual.style.animationName = visualSelector.value
+        }
+        
+        visual.id = `${keyId}-visual`
+        var toneColorId
+        // Key ids are either 2 or 3 characters, depending on if flat/sharp or not
+        if (keyId.length === 3) {
+            toneColorId = keyId.substring(0, 2)
+        } else {
+            toneColorId = keyId[0]
+        }
+        visual.style.backgroundColor = toneColors[toneColorId]
+        visContainer.append(visual)
+    }   
+
+    // remove visual
+    const removeVisual = (keyId) => {
+        const visToRemove = document.querySelector(`#${keyId}-visual`)
+        visToRemove.remove()
+    }
+
+
+
+
+    
+    var tone
+    // Connect tone to all nodes and start it
+    const startTone = (key) => {
+        tone = audioContext.createOscillator()
+        tone.frequency.setValueAtTime(parseFloat(key.dataset.tone), audioContext.currentTime)
+        tone.connect(gainNode)
+        .connect(distortion)
+        .connect(compressor)
+        .connect(panner)
+        .connect(lowPass)
+        .connect(highPass)
+        .connect(audioContext.destination)
+        tone.start(audioContext.currentTime)
+    }
+
+    const keys = document.querySelectorAll(".key")
+    // Listen for mouse hovers 
+    keys.forEach(key => key.addEventListener(
+        "mouseenter",
+        () => {
+            startTone(key)
+            createVisual(key.id.split("-")[0])
+        }
+    ))
+    keys.forEach(key => key.addEventListener(
+        "mouseleave",
+        () => {
+            tone.stop(audioContext.currentTime)
+            setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+        }
+    ))
+
+    // Listen for touchscreen touches
+    keys.forEach(key => key.addEventListener(
+        "ontouchstart",
+        () => {
+            startTone(key)
+            createVisual(key.id.split("-")[0])
+
+            // Listener inside other listener?  Tones not stopping properly
+            key.addEventListener(
+            "ontouchend",
             () => {
                 tone.stop(audioContext.currentTime)
                 setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
-            }
-        ))
+            })
+        }
+    ))
+    // Maybe use these still?
 
-        keys.forEach(key => key.addEventListener(
-            "ontouchstart",
-            () => {
-                startTone(key)
-                createVisual(key.id.split("-")[0])
-                // tone.stop()
-                // setTimeout(() => removeVisual(key.id.split("-")[0]), 10000)
-               key.addEventListener(
-                "ontouchend",
-                () => {
-                    tone.stop(audioContext.currentTime)
-                    setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
-                })
-            }
-        ))
-        // keys.forEach(key => key.addEventListener(
-        //     "ontouchend",
-        //     () => {
-        //         tone.disconnect()
-        //         tone.stop(audioContext.currentTime)
-        //         setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
-        //     }
-        // ))
-        // keys.forEach(key => key.addEventListener(
-        //     "ontouchmove",
-        //     () => {
-        //         tone.stop(audioContext.currentTime)
-        //         setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
-        //     }
-        // ))
-        // keys.forEach(key => key.addEventListener(
-        //     "ontouchcancel",
-        //     () => {
-        //         tone.stop(audioContext.currentTime)
-        //         setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
-        //     }
-        // ))
+    // keys.forEach(key => key.addEventListener(
+    //     "ontouchend",
+    //     () => {
+    //         tone.disconnect()
+    //         tone.stop(audioContext.currentTime)
+    //         setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+    //     }
+    // ))
+    // keys.forEach(key => key.addEventListener(
+    //     "ontouchmove",
+    //     () => {
+    //         tone.stop(audioContext.currentTime)
+    //         setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+    //     }
+    // ))
+    // keys.forEach(key => key.addEventListener(
+    //     "ontouchcancel",
+    //     () => {
+    //         tone.stop(audioContext.currentTime)
+    //         setTimeout(() => removeVisual(key.id.split("-")[0]), 10000) 
+    //     }
+    // ))
     
 
     const audioInput = document.querySelector("#audio-file")
@@ -451,8 +460,8 @@ document.addEventListener("DOMContentLoaded", () => {
             audioArea.append(audio)
         }
     )
-    // Connect all the nodes to both oscillator and track,
-    // send to destination
+    // Connect both oscillator and track to all the nodes,
+    // then send to destination
     oscillator.connect(gainNode)
         .connect(distortion)
         .connect(compressor)
@@ -467,9 +476,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .connect(panner)
         .connect(lowPass)
         .connect(highPass)
-        .connect(audioContext.destination)
-
-
-    
-}
+        .connect(audioContext.destination)    
+    }
 )

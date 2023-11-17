@@ -1,34 +1,73 @@
+/*  Elements */
 input, button {
     margin: 1em;
 }
 select {
     max-width: 100px;
 }
-#compressor, #pan-filter {
-    width: 35%;
+
+/* Classes */
+/* Generic classes */
+.flex-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.flex-col {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border: 1px solid rgb(0, 0, 0);
-    padding: 10px;
 }
-#keyboard {
-    display: flex;
-    margin: 20px;
+.hidden {
+    display: none;
 }
+
+/* Specific classes */
 .key {
     border: 1px solid black;
-    /* height: 100px; */
     width: 40px;
+    margin: 1px;
 }
 .white-key {
     height: 200px;
+    display: flex;
+    justify-content: center;
+}
+.c-f-key, .d-g-a-key {
+    border-right: none;
+}
+.b-e-key, .d-g-a-key {
+    border-left: none;
+}
+.c-f-key::after, .d-g-a-key::after {
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 150px;
+    left: 15px;
+    height: 50px;
+    width: 40px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.b-e-key::before,  .d-g-a-key::before {
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 150px;
+    right: 14px;
+    height: 50px;
+    width: 40px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
 }
 .black-key  {
     height: 150px;
+    width: 30px;
     font-size: 10px;
     background-color: black;
     color: white;
+    display: flex;
+    justify-content: center;
 }
 .knob {
     height: 50px;
@@ -46,29 +85,47 @@ select {
     rotate: 90deg;
     margin-left: 22px;
 } */
-.flex-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.visual {
+    position: absolute;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    margin: 5px;
 }
-.flex-col {
+
+
+/*  IDs */
+#compressor, #pan-filter {
+    width: 35%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    border: 1px solid rgb(0, 0, 0);
+    padding: 10px;
+}
+#keyboard {
+    display: flex;
+    margin: 20px;
 }
 #visuals {
     width: 100vw;
     height: 35vw;
     background-color: black;
-    /* border: 1px solid black; */
     margin: 20px 0px;
     display: flex;
     justify-content: flex-start;
 }
-.hidden {
-    display: none;
+#visual-sel-cont {
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 50px;
+    color: rgb(148, 103, 103);
+}
+#custom-controls {
+    color: rgb(148, 103, 103);
 }
 
 
+/*  Animations  */
 @keyframes basic {
     0% {
         rotate: 0deg;
@@ -127,9 +184,6 @@ select {
     }
 }
 
-
-/* VERSION 2 */
-
 @keyframes spinning-b {
     0% {
         height: 5px;
@@ -179,8 +233,7 @@ select {
     }
 } 
 
-/*  ORIGINAL 90's VERSION: */
-
+/*  90's Animation: */
 @keyframes nineties {
     0% {
         rotate: 0deg;
@@ -200,18 +253,4 @@ select {
     }
 } 
 
-.visual {
-    position: absolute;
-    animation-duration: 8s;
-    animation-timing-function: linear;
-    margin: 5px;
-}
-#visual-sel-cont {
-    position: absolute;
-    margin-top: 50px;
-    margin-left: 50px;
-    color: rgb(148, 103, 103);
-}
-#custom-controls {
-    color: rgb(148, 103, 103);
-}
+
